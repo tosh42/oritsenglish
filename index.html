@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orit's English | Zoom English Teacher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a2e;
+      --cream: #f9f5ef;
+      --gold: #c9a84c;
+      --gold-light: #e8d5a3;
+      --sage: #7a9e7e;
+      --warm-white: #fefcf8;
+      --text-mid: #4a4a5a;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--warm-white);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 68px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.8rem; text-decoration: none;
+    }
+    .nav-logo img {
+      height: 48px; width: 48px; object-fit: contain; border-radius: 50%;
+      border: 2px solid var(--gold);
+    }
+    .nav-logo-text {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      line-height: 1.2;
+    }
+    .nav-logo-text span {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex; gap: 0.3rem; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+      background: rgba(201,168,76,0.12);
+    }
+
+    /* ── PAGES ── */
+    .page { display: none; padding-top: 68px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: white;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-flag-row {
+      display: flex; justify-content: center; align-items: center; gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .hero-flag-row img { height: 48px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+      line-height: 1.15;
+    }
+    .hero h2 {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+    .hero-tagline {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 0.9rem 2.5rem;
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ── BADGE 24/6 ── */
+    .badge-24 {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+      background: var(--ink);
+      padding: 2rem;
+      color: white;
+    }
+    .badge-24 img {
+      width: 120px; height: 120px; object-fit: cover; border-radius: 50%;
+      border: 3px solid var(--gold);
+      flex-shrink: 0;
+    }
+    .badge-24-text h3 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--gold);
+    }
+    .badge-24-text p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 0.4rem;
+    }
+    .badge-24-text small {
+      display: block; margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── ABOUT BIO ── */
+    .about-section {
+      max-width: 900px; margin: 0 auto; padding: 4rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+    }
+    .about-photo img {
+      width: 100%; border-radius: 4px;
+      box-shadow: 8px 8px 0 var(--gold-light);
+    }
+    .about-bio h2 {
+      font-family: var(--serif);
+      font-size: 2rem; margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    .bio-table { width: 100%; border-collapse: collapse; }
+    .bio-table tr { border-bottom: 1px solid rgba(0,0,0,0.07); }
+    .bio-table td { padding: 0.6rem 0; font-size: 0.9rem; color: var(--text-mid); }
+    .bio-table td:first-child { font-weight: 500; color: var(--ink); width: 120px; }
+    .bio-spec {
+      margin-top: 1.5rem;
+      font-size: 0.95rem; color: var(--text-mid); line-height: 1.7;
+    }
+    .bio-spec strong { color: var(--ink); }
+    .spec-tags {
+      margin-top: 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .spec-tag {
+      background: var(--gold-light);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+    }
+
+    /* ── PIGEON ENGLISH ── */
+    .pigeon-section {
+      background: var(--cream);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .pigeon-section h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      letter-spacing: 0.06em;
+    }
+    .pigeon-section p {
+      max-width: 680px; margin: 0 auto;
+      font-size: 0.95rem; color: var(--text-mid); line-height: 1.8;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;
+    }
+    .testimonials-section h2 {
+      font-family: var(--serif); font-size: 2rem;
+      text-align: center; margin-bottom: 0.5rem;
+    }
+    .testimonials-section .section-sub {
+      text-align: center; color: var(--text-mid); font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+    .testimonials-section .section-sub a {
+      color: var(--gold);
+    }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: var(--cream);
+      border-left: 4px solid var(--gold);
+      padding: 1.8rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .testimonial-card blockquote {
+      font-family: var(--serif); font-style: italic;
+      font-size: 0.95rem; line-height: 1.8; color: var(--text-mid);
+      margin-bottom: 1rem;
+    }
+    .testimonial-card cite {
+      display: block; font-style: normal;
+      font-weight: 500; font-size: 0.85rem; color: var(--ink);
+    }
+    .testimonial-card cite span {
+      display: block; font-weight: 300; font-size: 0.8rem;
+      color: var(--text-mid); margin-top: 0.2rem;
+    }
+
+    /* ── CLASSES PAGE ── */
+    .page-hero {
+      background: var(--ink);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.1) 0%, transparent 70%);
+    }
+    .page-hero-img {
+      width: 200px; height: 200px; object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .page-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--gold-light);
+      position: relative;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .classes-content {
+      max-width: 900px; margin: 0 auto; padding: 4rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+    }
+    .class-block h3 {
+      font-family: var(--serif); font-size: 1.3rem;
+      color: var(--ink); margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--gold);
+    }
+    .class-block ul {
+      list-style: none; padding: 0;
+    }
+    .class-block ul li {
+      font-size: 0.9rem; color: var(--text-mid);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .class-block ul li::before {
+      content: '›'; color: var(--gold); margin-right: 0.5rem; font-weight: 700;
+    }
+    .class-block p {
+      font-size: 0.9rem; color: var(--text-mid); line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+    .class-block .summary-note {
+      margin-top: 1rem;
+      background: var(--gold-light);
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      color: var(--ink);
+      border-radius: 2px;
+    }
+    .topics-full {
+      max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+    }
+    .topic-group h4 {
+      font-family: var(--serif); font-size: 1.1rem;
+      color: var(--ink); margin-bottom: 0.8rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      font-size: 0.8rem; font-family: var(--sans); font-weight: 500;
+      color: var(--gold);
+    }
+    .topic-group ul {
+      list-style: none;
+    }
+    .topic-group ul li {
+      font-size: 0.88rem; color: var(--text-mid);
+      padding: 0.3rem 0;
+    }
+    .topic-group ul li::before {
+      content: '·'; color: var(--gold); margin-right: 0.5rem;
+    }
+
+    /* ── PRICES PAGE ── */
+    .prices-grid {
+      max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .price-card {
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .price-card-img {
+      width: 100%; height: 180px; object-fit: cover;
+    }
+    .price-card-body { padding: 1.5rem; }
+    .price-card-body h3 {
+      font-family: var(--serif); font-size: 1.15rem;
+      color: var(--ink); margin-bottom: 0.3rem;
+    }
+    .price-card-body .price-note {
+      font-size: 0.78rem; color: var(--text-mid);
+      font-style: italic; margin-bottom: 1rem;
+    }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      font-size: 0.88rem;
+    }
+    .price-row .label { color: var(--text-mid); }
+    .price-row .amount { font-weight: 500; color: var(--ink); }
+    .price-row .per { font-size: 0.75rem; color: var(--gold); margin-left: 0.3rem; }
+    .price-card-body .discount-note {
+      margin-top: 0.8rem; font-size: 0.78rem;
+      color: var(--sage); font-style: italic;
+    }
+    .price-24-note {
+      max-width: 700px; margin: 0 auto 3rem;
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--ink);
+      color: white;
+      border-radius: 4px;
+    }
+    .price-24-note h4 {
+      font-family: var(--serif); font-size: 1.4rem;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .price-24-note p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+    }
+
+    /* ── TERMS PAGE ── */
+    .terms-content {
+      max-width: 700px; margin: 0 auto; padding: 4rem 2rem;
+    }
+    .terms-content h2 {
+      font-family: var(--serif); font-size: 1.8rem;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .terms-content .intro-text {
+      font-size: 0.95rem; color: var(--text-mid); line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .term-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      background: var(--cream);
+      border-radius: 4px;
+    }
+    .term-number {
+      background: var(--gold);
+      color: var(--ink);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .term-text { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; }
+    .terms-sign {
+      margin-top: 2rem;
+      font-family: var(--serif); font-style: italic;
+      font-size: 1.1rem; color: var(--ink);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+    }
+    .contact-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .contact-item { font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+    .contact-item strong { display: block; color: var(--gold); font-size: 0.75rem;
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .contact-item a { color: rgba(255,255,255,0.8); text-decoration: none; }
+    .contact-item a:hover { color: var(--gold); }
+    .footer-social {
+      display: flex; justify-content: center; gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .footer-social a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+    footer .copyright {
+      font-size: 0.78rem; color: rgba(255,255,255,0.3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .about-section { grid-template-columns: 1fr; }
+      .classes-content { grid-template-columns: 1fr; }
+      .topics-full { grid-template-columns: 1fr; }
+      .nav-links a { font-size: 0.75rem; padding: 0.4rem 0.6rem; }
+      .badge-24 { flex-direction: column; text-align: center; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .page.active .hero h1,
+    .page.active .hero h2,
+    .page.active .hero-tagline,
+    .page.active .hero-cta {
+      animation: fadeUp 0.6s ease both;
+    }
+    .page.active .hero h1 { animation-delay: 0.1s; }
+    .page.active .hero h2 { animation-delay: 0.2s; }
+    .page.active .hero-tagline { animation-delay: 0.3s; }
+    .page.active .hero-cta { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')" href="#">
+    <img src="https://static.wixstatic.com/media/10d2d6_0dc18d0f0d9840afb2e1960b5808b10c~mv2.png/v1/crop/x_119,y_116,w_527,h_474/fill/w_87,h_77,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Logo%20text%203_edited.png" alt="Orit's English logo"/>
+    <div class="nav-logo-text">
+      Orit Mansoor
+      <span>Private English Teacher</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" id="nav-home" class="active" onclick="showPage('home'); return false;">Home</a></li>
+    <li><a href="#" id="nav-classes" onclick="showPage('classes'); return false;">Classes</a></li>
+    <li><a href="#" id="nav-prices" onclick="showPage('prices'); return false;">Prices</a></li>
+    <li><a href="#" id="nav-terms" onclick="showPage('terms'); return false;">Terms</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-flag-row">
+      <img src="https://static.wixstatic.com/media/10d2d6_0ce0e88c7eed45d1a5e6f67eeaa35242~mv2.png/v1/fill/w_272,h_212,al_c,lg_1,q_85,enc_avif,quality_auto/UK%20FLAG_edited.png" alt="UK flag"/>
+      <img src="https://static.wixstatic.com/media/10d2d6_d127902d909e44b1817375978bb2b4ed~mv2.png/v1/fill/w_271,h_212,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/616oMVqt0dL_edited.png" alt="Israel flag"/>
+    </div>
+    <h1>Orit's English</h1>
+    <h2>Quality teaching with a personal touch</h2>
+    <p class="hero-tagline">For all your English language needs</p>
+    <button class="hero-cta" onclick="showPage('classes')">Explore Classes</button>
+  </section>
+
+  <!-- 24/6 Banner -->
+  <div class="badge-24">
+    <img src="https://static.wixstatic.com/media/10d2d6_1804b773540d4dec998052e222786145~mv2.jpg/v1/crop/x_101,y_102,w_894,h_903/fill/w_330,h_333,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/10d2d6_1804b773540d4dec998052e222786145~mv2.jpg" alt="Online teaching"/>
+    <div class="badge-24-text">
+      <h3>Teaching English online, around the world — 24/6</h3>
+      <p>Learning programs when you need them · Classes through the night · 6 days a week</p>
+      <small>*24hrs a day, 6 days a week (closed Saturday). 20% surcharge for classes between 6pm–9am Israel time.</small>
+    </div>
+  </div>
+
+  <!-- About / Bio -->
+  <section class="about-section">
+    <div class="about-photo">
+      <img src="https://static.wixstatic.com/media/10d2d6_2d1d5247aeba4298b64dcd50c9b92dc5~mv2.jpg/v1/crop/x_76,y_456,w_835,h_837/fill/w_400,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/38eaee78-d9a7-4fde-bbc4-be117970c557.jpg" alt="Orit Mansoor"/>
+    </div>
+    <div class="about-bio">
+      <h2>Hello — A Bit About Me</h2>
+      <table class="bio-table">
+        <tr><td>Name</td><td>Orit Mansoor</td></tr>
+        <tr><td>Born</td><td>London, England</td></tr>
+        <tr><td>Languages</td><td>Native English &amp; fluent Hebrew</td></tr>
+        <tr><td>UK Career</td><td>English school teacher, London</td></tr>
+        <tr><td>Israel Career</td><td>6 years integrated in Israeli society as English teacher to individuals, business people, adults and children</td></tr>
+        <tr><td>Father</td><td>Israeli-born businessman in London</td></tr>
+      </table>
+      <div class="bio-spec">
+        <p>I specialise in <strong>general language</strong>, day-to-day topics, and <strong>business communication English</strong>, where language, fluency and confidence are paramount.</p>
+        <div class="spec-tags">
+          <span class="spec-tag">Vocabulary</span>
+          <span class="spec-tag">Grammar</span>
+          <span class="spec-tag">Delivery</span>
+          <span class="spec-tag">Business English</span>
+          <span class="spec-tag">Zoom Lessons</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pigeon English -->
+  <section class="pigeon-section">
+    <h3>Pigeon English</h3>
+    <p>A grammatically simplified means of communication that develops between two or more groups of people that do not have a language in common; typically its vocabulary and grammar are limited. It is most commonly employed in situations such as trade, where both groups speak languages different from the language of the country in which they reside — but where there is no common language between them.</p>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <h2>What People Say</h2>
+    <p class="section-sub">Please <a href="mailto:oritm@ymail.com">contact me</a> for references and contact details</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <blockquote>"Before meeting Orit, I was terrified of speaking English with others and in front of an audience. However, after taking lessons with Orit, not only did I gain the confidence to communicate in English with colleagues, but I also acquired the ability to speak at worldwide conferences, in front of hundreds of people, in English. Orit has greatly improved my language skills and elevated my abilities to new heights."</blockquote>
+        <cite>Yakir Kadkoda <span>Lead Security Researcher, Aqua Security (Hi-Tek)</span></cite>
+      </div>
+      <div class="testimonial-card">
+        <blockquote>"Orit is a wonderful and professional teacher! My English has improved dramatically thanks to her. She has a wonderful ability to adapt herself to the level of the student and their needs, whether they are academic or business."</blockquote>
+        <cite>Merav <span>PhD Student, Ben-Gurion University of the Negev</span></cite>
+      </div>
+      <div class="testimonial-card">
+        <blockquote>"Orit is an outstanding teacher. I have been to many other English learning platforms and I have never met a professional, intelligent, and sensitive English teacher like Orit. She knows what she is doing and how to help you. After a few years with Orit, I can say my English has greatly improved."</blockquote>
+        <cite>Noam <span>Lawyer</span></cite>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Orit's English</div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <strong>Phone / SMS</strong>
+        053 966 0900
+      </div>
+      <div class="contact-item">
+        <strong>WhatsApp</strong>
+        0044 7891 579 165
+      </div>
+      <div class="contact-item">
+        <strong>Email</strong>
+        <a href="mailto:oritm@ymail.com">oritm@ymail.com</a>
+      </div>
+      <div class="contact-item">
+        <strong>Website</strong>
+        <a href="http://www.OrItsEnglish.com">www.oritsenglish.com</a>
+      </div>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/orit-mansoor-b7212a175/" target="_blank" title="LinkedIn">in</a>
+    </div>
+    <p class="copyright">© 2023 Orit Mansoor. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CLASSES
+══════════════════════════════════════ -->
+<div class="page" id="page-classes">
+
+  <section class="page-hero">
+    <img class="page-hero-img" src="https://static.wixstatic.com/media/10d2d6_140a4850264c48d2a484c719a836d70c~mv2.jpg/v1/crop/x_62,y_0,w_939,h_939/fill/w_340,h_340,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20mess%20with%2014.jpg" alt="Classes"/>
+    <h1>Classes</h1>
+    <p>Grammar · Vocabulary · Business · Day-to-Day Topics</p>
+  </section>
+
+  <div class="classes-content">
+    <div class="class-block">
+      <h3>Grammar Areas Covered</h3>
+      <ul>
+        <li>All tenses</li>
+        <li>Prepositions</li>
+        <li>Comparatives / superlatives</li>
+        <li>Connecting words</li>
+        <li>Infinitives and gerunds</li>
+        <li>Nouns / verbs / adjectives / adverbs</li>
+        <li>Conditionals</li>
+        <li>Reported speech</li>
+        <li>Question form / statement form</li>
+      </ul>
+    </div>
+    <div class="class-block">
+      <h3>How It Works</h3>
+      <p>All grammar areas are covered, alongside vocabulary expansion and business or day-to-day topic discussions.</p>
+      <p>Topics are your choice — or choose from the lists below. Classes include interview practice and presentation review.</p>
+      <div class="summary-note">✓ Summary sent after every lesson (with homework exercise if wanted)</div>
+    </div>
+  </div>
+
+  <div class="topics-full">
+    <div class="topic-group">
+      <h4>Business Topics</h4>
+      <ul>
+        <li>Technology in business: RPA, AI, Cyber security</li>
+        <li>SaaS companies, Information systems</li>
+        <li>Culture &amp; Negotiation</li>
+        <li>Competition &amp; Global economy</li>
+        <li>Interview practice</li>
+        <li>Promotion requests</li>
+        <li>Business trips</li>
+        <li>Digital marketing</li>
+        <li>Investment &amp; Real estate</li>
+        <li>Start-ups</li>
+      </ul>
+    </div>
+    <div class="topic-group">
+      <h4>Day to Day Topics</h4>
+      <ul>
+        <li>Healthy eating</li>
+        <li>Online shopping</li>
+        <li>Technology</li>
+        <li>Animal testing</li>
+        <li>Unconventional medicine</li>
+        <li>Transport</li>
+        <li>Gender equality</li>
+        <li>Autonomous vehicles</li>
+        <li>Global warming</li>
+        <li>Education</li>
+        <li>Agriculture</li>
+        <li>Stress management</li>
+        <li>…and many more</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Orit's English</div>
+    <div class="contact-grid">
+      <div class="contact-item"><strong>Phone / SMS</strong>053 966 0900</div>
+      <div class="contact-item"><strong>WhatsApp</strong>0044 7891 579 165</div>
+      <div class="contact-item"><strong>Email</strong><a href="mailto:oritm@ymail.com">oritm@ymail.com</a></div>
+    </div>
+    <p class="copyright">© 2023 Orit Mansoor. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: PRICES
+══════════════════════════════════════ -->
+<div class="page" id="page-prices">
+
+  <section class="page-hero">
+    <img class="page-hero-img" src="https://static.wixstatic.com/media/10d2d6_9a12b7fc3ea64fc1bb8702abddf10f2c~mv2.jpg/v1/crop/x_62,y_0,w_939,h_939/fill/w_305,h_305,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20mess%20with%2012.jpg" alt="Prices"/>
+    <h1>Prices</h1>
+    <p>Flexible packages to suit every learner</p>
+  </section>
+
+  <div class="prices-grid">
+
+    <!-- Price Range 01 -->
+    <div class="price-card">
+      <img class="price-card-img" src="https://static.wixstatic.com/media/11062b_20f025a1d8da476f9f98846cd3c45428~mv2.jpeg/v1/fill/w_491,h_331,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Urban%20Graffiti.jpeg" alt="Price Range 01"/>
+      <div class="price-card-body">
+        <h3>Price Range 01</h3>
+        <p class="price-note">Online · 9am–8pm · Session = 30 minutes</p>
+        <div class="price-row"><span class="label">Single session</span><span class="amount">86 NIS</span></div>
+        <div class="price-row"><span class="label">12 sessions</span><span class="amount">924 NIS <span class="per">(77 each)</span></span></div>
+        <div class="price-row"><span class="label">25 sessions</span><span class="amount">1,700 NIS <span class="per">(68 each)</span></span></div>
+        <div class="price-row"><span class="label">40 sessions</span><span class="amount">2,360 NIS <span class="per">(59 each)</span></span></div>
+        <p class="discount-note">* Please ask about further discounted sessions</p>
+      </div>
+    </div>
+
+    <!-- Price Range 02 -->
+    <div class="price-card">
+      <img class="price-card-img" src="https://static.wixstatic.com/media/11062b_fcef70c33f8f403d8343fc3a4714e584~mv2.jpg/v1/fill/w_490,h_331,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Exam.jpg" alt="Price Range 02"/>
+      <div class="price-card-body">
+        <h3>Price Range 02</h3>
+        <p class="price-note">Online · 8pm–9am · Session = 30 minutes</p>
+        <div class="price-row"><span class="label">Single session</span><span class="amount">105 NIS</span></div>
+        <div class="price-row"><span class="label">12 sessions</span><span class="amount">1,068 NIS <span class="per">(89 each)</span></span></div>
+        <div class="price-row"><span class="label">25 sessions</span><span class="amount">1,975 NIS <span class="per">(79 each)</span></span></div>
+        <div class="price-row"><span class="label">40 sessions</span><span class="amount">2,840 NIS <span class="per">(71 each)</span></span></div>
+        <p class="discount-note">* Please ask about further discounted sessions</p>
+      </div>
+    </div>
+
+    <!-- Price Range 03 -->
+    <div class="price-card">
+      <img class="price-card-img" src="https://static.wixstatic.com/media/11062b_ae0a0b1d76b14be8927d348bcf5b4d00~mv2.jpg/v1/fill/w_490,h_331,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Office%20Building%20at%20Night.jpg" alt="Price Range 03"/>
+      <div class="price-card-body">
+        <h3>Price Range 03</h3>
+        <p class="price-note">At your location · 9am–8pm · Session = 45min–1 hour</p>
+        <div class="price-row"><span class="label">Single session</span><span class="amount">120 NIS <span class="per">+ travel</span></span></div>
+        <div class="price-row"><span class="label">12 sessions</span><span class="amount">1,320 NIS <span class="per">(110 + travel)</span></span></div>
+        <p class="discount-note">* Please ask about further discounted sessions</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="max-width:700px; margin: 0 auto 3rem; padding: 0 2rem;">
+    <div class="price-24-note">
+      <h4>24/6 Learning Programmes</h4>
+      <p>Classes available 24 hours a day, 6 days a week (closed Saturday).<br/>
+      20% surcharge applies for classes between 6pm–9am Israel time.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Orit's English</div>
+    <div class="contact-grid">
+      <div class="contact-item"><strong>Phone / SMS</strong>053 966 0900</div>
+      <div class="contact-item"><strong>WhatsApp</strong>0044 7891 579 165</div>
+      <div class="contact-item"><strong>Email</strong><a href="mailto:oritm@ymail.com">oritm@ymail.com</a></div>
+    </div>
+    <p class="copyright">© 2023 Orit Mansoor. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: TERMS
+══════════════════════════════════════ -->
+<div class="page" id="page-terms">
+
+  <section class="page-hero">
+    <img class="page-hero-img" src="https://static.wixstatic.com/media/10d2d6_0eb90f1ca11f4faa9b62623f25f72afb~mv2.jpg/v1/crop/x_31,y_0,w_1001,h_939/fill/w_137,h_129,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo%20mess%20with%2013.jpg" alt="Terms"/>
+    <h1>Terms &amp; Conditions</h1>
+    <p>Please read before booking</p>
+  </section>
+
+  <div class="terms-content">
+    <p class="intro-text">As an independent I can be more accommodating than the bigger teaching bodies, but I have a greater need to keep my diary full. Please see my terms and conditions below.</p>
+
+    <div class="term-item">
+      <div class="term-number">1</div>
+      <div class="term-text"><strong>24-Hour Cancellation Policy.</strong> Lessons cancelled with less than 24 hours' notice are fully charged. I can be approached in exceptional circumstances or emergencies.</div>
+    </div>
+
+    <div class="term-item">
+      <div class="term-number">2</div>
+      <div class="term-text"><strong>Package Expiry.</strong> All packages have an expiration date of one year from the date of purchase.</div>
+    </div>
+
+    <div class="term-item">
+      <div class="term-number">3</div>
+      <div class="term-text"><strong>Lesson Start Time.</strong> Please allow for up to a 5-minute delay for any lesson to start.</div>
+    </div>
+
+    <p class="terms-sign">Thank you for your custom — I look forward to serving your language needs.<br/><br/>— Orit</p>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Orit's English</div>
+    <div class="contact-grid">
+      <div class="contact-item"><strong>Phone / SMS</strong>053 966 0900</div>
+      <div class="contact-item"><strong>WhatsApp</strong>0044 7891 579 165</div>
+      <div class="contact-item"><strong>Email</strong><a href="mailto:oritm@ymail.com">oritm@ymail.com</a></div>
+    </div>
+    <p class="copyright">© 2023 Orit Mansoor. All rights reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
